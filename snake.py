@@ -100,27 +100,76 @@ def move_snake():
     snake.clearstamp(old_stamp)
     pos_list.pop(0)
 
+    global food_stamps, food_pos
+    if snake.pos() in food_pos:
+        food_ind=food_pos.index(snake.pos())
+        food.clearstamp(food_stamps[food_ind])
+        food_pos.pop(food_ind)
+        food_stamps.pop(food_ind)
+        print("you have eaten the food!")
+        #make_food()
+
     new_pos = snake.pos()
     new_x_pos = new_pos[0]
     new_y_pos = new_pos[1]
 
+      
+    min_x=-int(SIZE_X/2/SQUARE_SIZE)+1
+    max_x=int(SIZE_X/2/SQUARE_SIZE)-1
+    min_y=-int(SIZE_Y/2/SQUARE_SIZE)-1
+    max_y=int(SIZE_Y/2/SQUARE_SIZE)+1
+
+    food_x = random.randit(min_x,max_x)*SQUARE_SIZE
+    food_y = random.randit(min_y,max_y)*SQUARE_SIZE
+    food.goto(food_x,food_y)
+    food_pos.append(food.pos())
+    new_food = food.stamp()
+    food_stamps.append(new_food)
+    
+
+
+
+    
+
     if new_x_pos >= RIGHT_EDGE:
         print("you hit the right edge! game over!")
-
+        quit()    
+    if new_x_pos <=LEFT_EDGE:
+        print("you hit the right edge! game over!")
+        quit()
+    if new_y_pos >= UP_EDGE:
+        print("you hit the right edge! game over!")
+        quit()
+    if new_y_pos <= DOWN_EDGE:
+        print("you hit the right edge! game over!")
+        quit()
     turtle.ontimer(move_snake,TIME_STEP)
 move_snake()    
 
-turte.register_shape("trash.gif")
+turtle.register_shape("trash.gif")
 food = turtle.clone()
 food.shape("trash.gif")
 
 food_pos = [(100,100), (-100,100), (-100,-100), (100,-100)]
 food_stamps = []
+food.hideturtle()
+
+#food.pendown()
 for this_food_pos in food_pos:
     food.goto(this_food_pos)
     new_stamp = food.stamp()
-    food_stamp.append(new-stamp)
-    
+    food_stamps.append(new_stamp)
+##def move_snake():
+##    global food_stamps, food_pos
+##    if snake.pos() in food_pos:
+##        food_ind=food_pos.index(snake.pos())
+##        food.clearstamp(food_stamps[food_ind])
+##        food_pos.pop(food_ind)
+##        food_stamps.pop(food_ind)
+##        print("you have eaten the food!")
+##        make_food()
+        
+   
     
         
         
